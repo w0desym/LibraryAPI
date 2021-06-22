@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using LibraryAPI.Models;
@@ -12,6 +13,15 @@ namespace LibraryAPI.Controllers
     public class LibraryController : ControllerBase
     {
         private readonly IRepositoryService _repositoryService;
+        private readonly List<string> _categories = new List<string>
+        {
+            "Biographies & Memoirs",
+            "History",
+            "Literature & Fiction",
+            "Sci-Fi & Fantasy",
+            "Science & Math",
+            "Best Sellers",
+        };
 
         public LibraryController(IRepositoryService repositoryService)
         {
@@ -34,6 +44,13 @@ namespace LibraryAPI.Controllers
             {
                 return BadRequest(ErrorCode.CouldNotReadItems.ToString());
             }
+        }
+
+        [HttpGet]
+        [Route("books/categories")]
+        public IActionResult GetCategories()
+        {
+            return Ok(_categories);
         }
 
         [HttpPost]
@@ -72,15 +89,15 @@ namespace LibraryAPI.Controllers
             }
             catch (Exception)
             {
-                return BadRequest(ErrorCode.CouldNotCreateItem.ToString());
+                return BadRequest(ErrorCode.CouldNotDeleteItem.ToString());
             }
 
             return Ok();
         }
 
-        [HttpPatch]
+        [HttpPut]
         [Route("books")]
-        public async Task<IActionResult> UpdateReaderAsync([FromBody] BookModel book)
+        public async Task<IActionResult> UpdateBookAsync([FromBody] BookModel book)
         {
             try
             {
@@ -93,7 +110,7 @@ namespace LibraryAPI.Controllers
             }
             catch (Exception)
             {
-                return BadRequest(ErrorCode.CouldNotCreateItem.ToString());
+                return BadRequest(ErrorCode.CouldNotUpdateItem.ToString());
             }
 
             return Ok();
@@ -155,13 +172,13 @@ namespace LibraryAPI.Controllers
             }
             catch (Exception)
             {
-                return BadRequest(ErrorCode.CouldNotCreateItem.ToString());
+                return BadRequest(ErrorCode.CouldNotDeleteItem.ToString());
             }
 
             return Ok();
         }
 
-        [HttpPatch]
+        [HttpPut]
         [Route("readers")]
         public async Task<IActionResult> UpdateReaderAsync([FromBody] ReaderModel reader)
         {
@@ -176,7 +193,7 @@ namespace LibraryAPI.Controllers
             }
             catch (Exception)
             {
-                return BadRequest(ErrorCode.CouldNotCreateItem.ToString());
+                return BadRequest(ErrorCode.CouldNotUpdateItem.ToString());
             }
 
             return Ok();

@@ -17,7 +17,7 @@ namespace LibraryAPI.Models
         public string Surname { get; set; }
 
         [Required]
-        public long BirthDate { get; set; }
+        public string BirthDate { get; set; }
 
         [Required]
         public string Occupation { get; set; }

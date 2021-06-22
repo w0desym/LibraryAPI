@@ -3,6 +3,6 @@ namespace LibraryAPI
 {
     public static class Constants
     {
-        public const string DB_NAME = "LibraryDatabase.db";
+        public const string DB_NAME = "Library.db";
     }
 }
